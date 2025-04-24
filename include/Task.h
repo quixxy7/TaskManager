@@ -1,5 +1,5 @@
-#ifndef Tash.h
-#define Task.h
+#ifndef TASK_H
+#define TASK_H
 
 #include <string>
 #include <stdexcept>
@@ -10,15 +10,15 @@ enum class TaskStatus {
     Completed
 };
 
-Class Task {
-    privte:
+class Task {
+    private:
         std::string name;
         std::string description;
         TaskStatus status;
     public:
         Task(const std::string &name,
-             const std::string &description = '',
-             TaskStatus status = TaskStatus::NotStarted)
+             const std::string &description = "",
+             TaskStatus status = TaskStatus::NotStarted);
 
         std::string getName() const;
         std::string getDescription() const;
@@ -29,7 +29,7 @@ Class Task {
         void setStatus(TaskStatus newStatus);
 
         static std::string statusToString(TaskStatus status);
-        static std::string stringToStatus(const std::string &str);
-}
+        static TaskStatus stringToStatus(const std::string &str);
+};
 
 #endif
