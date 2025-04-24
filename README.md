@@ -3,15 +3,15 @@ CLI - приложение, для контроля над задачами, с 
 
 Структура проекта TaskManager
 
-TaskManager/
-├── src/
+TaskManager
+├── src
 │   ├── main.cpp
 │   ├── Task.cpp
 │   └── TaskManager.cpp
-├── include/
+├── include
 │   ├── Task.h
 │   └── TaskManager.h
-├── data/
+├── data
 │   └── tasks.json  (или tasks.txt)
 ├── CMakeLists.txt  (если используете CMake)
 └── README.md
