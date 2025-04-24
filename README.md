@@ -13,7 +13,6 @@ CLI - приложение, для контроля над задачами, с 
 - │   └── TaskManager.h
 - ├── data
 - │   └── tasks.json  (или tasks.txt)
-- ├── CMakeLists.txt  (если используете CMake)
 - └── README.md
 
 Описание структуры
