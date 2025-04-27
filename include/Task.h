@@ -3,6 +3,7 @@
 
 #include <string>
 #include <stdexcept>
+using json = nlohmann::json;
 
 enum class TaskStatus {
     NotStarted,
