@@ -3,6 +3,7 @@
 
 #include <string>
 #include <stdexcept>
+#include "nlohmann/json.hpp"
 using json = nlohmann::json;
 
 enum class TaskStatus {
