@@ -1,4 +1,5 @@
 from task import Task
+from storage import Storage
 
 class TaskManager:
     def __init__(self):
@@ -22,8 +23,19 @@ class TaskManager:
                 return
         print("task was not found. Nothing removed")
 
+    def save_tasks(self):
+        json_file = Storage()
+        json_file.save(self.tasks)
+        print("Tasks saved")
+
+    def load_tasks(self):
+        json_file = Storage()
+        self.tasks = json_file.load()
+        print("Tasks loaded")
+
 def main():
     task_manager = TaskManager()
+    task_manager.load_tasks()
     while True:
             print("\nMenu:")
             print("1. Add new task")
@@ -43,14 +55,15 @@ def main():
 
             elif choice == "2":
                 task_manager.print_tasks()
-                next = input("Press Enter to continue")
+                next = input("|   Press Enter to continue   |")
 
             elif choice == "3":
                 name = input("Enter task name: ")
                 task_manager.remove_taks(name)
-                next = input("Press Enter to continue")
+                next = input("|   Press Enter to continue   |")
 
             elif choice == "4":
+                task_manager.save_tasks()
                 print("Exiting application. Goodbye!")
                 break
 
