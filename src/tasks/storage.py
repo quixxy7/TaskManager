@@ -1,7 +1,7 @@
-import json
+import json, datetime
 
 from pathlib import Path
-from tasks.task import Task
+from tasks.task import Task, TaskStatus
 
 class Storage:
     def __init__(self, filename: str = "tasks.json"):
@@ -18,10 +18,11 @@ class Storage:
                 "id": task_id,
                 "name": task.name,
                 "description": task.description,
-                "status": task.status
+                "status": task.status.value,
+                "created": task.createdAt.isoformat(),
+                "updated": task.updatedAt.isoformat(),
             }
         for task_id, task in tasks.items()]
-
         data = {
             "last_task_id": last_task_id,
             "tasks": data_task}
@@ -38,8 +39,12 @@ class Storage:
 
         last_task_id: int = data.get("last_task_id") # if isinstance("last_task_id", int) else 1
         tasks: dict[int, Task] = {
-            task["id"]: Task(task["name"], task["description"], task["status"])
-            for task in data.get("tasks")
+            task["id"]: Task(
+                task["name"],
+                task["description"],
+                TaskStatus(task["status"]),
+                datetime.date.fromisoformat(task["created"]),
+                datetime.date.fromisoformat(task["updated"])) for task in data.get("tasks")
         }
 
         return last_task_id, tasks

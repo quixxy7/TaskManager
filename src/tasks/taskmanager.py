@@ -13,6 +13,9 @@ class TaskManager:
     def remove_task(self, task_id: int) -> None:
         self.tasks.pop(task_id)
 
+    def update_task(self, task_id: int) -> None:
+        pass
+
     def print_tasks(self) -> None:
         if not self.tasks:
             print("No tasks")
