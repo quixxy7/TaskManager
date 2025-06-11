@@ -3,33 +3,30 @@ from tasks.storage import Storage
 
 class TaskManager:
     def __init__(self):
-        self.tasks: list[Task] = []
+        self.task_id: int = 1
+        self.tasks: dict[int, Task] = {}
 
     def add_task(self, task: Task) -> None:
-        self.tasks.append(task)
+        self.tasks[self.task_id] = task
+        self.task_id += 1
 
-    def remove_taks(self, task_name: str) -> None:
-        for i, task in enumerate(self.tasks):
-            if task.name == task_name:
-                self.tasks.pop(i)
-                print("Task was removed")
-                return
-        print("Task wasn't found. Nothing was removed")
+    def remove_task(self, task_id: int) -> None:
+        self.tasks.pop(task_id)
 
     def print_tasks(self) -> None:
         if not self.tasks:
-            print("List is empty")
+            print("No tasks")
             return
 
-        for i, task in enumerate(self.tasks, start=1):
-            print(f"{i}. {task}")
+        for task_id, task in self.tasks.items():
+            print(f"{task_id}. {task}")
 
     def save_tasks(self):
         json_file = Storage()
-        json_file.save(self.tasks)
+        json_file.save_to_json(self.tasks, self.task_id)
         print("Tasks saved")
 
     def load_tasks(self):
         json_file = Storage()
-        self.tasks = json_file.load()
+        self.task_id, self.tasks = json_file.load_from_json()
         print("Tasks loaded")

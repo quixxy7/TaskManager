@@ -12,21 +12,34 @@ class Storage:
         self.data_dir.mkdir(exist_ok=True)
         self.filename = self.data_dir/filename
 
-    def save(self, tasks: list[Task]) -> None:
-        data = [{"name": task.name,
-                 "description": task.description,
-                 "done": task.done}
-        for task in tasks]
+    def save_to_json(self, tasks: dict[int, Task], last_task_id: int) -> None:
+        data_task = [
+            {
+                "id": task_id,
+                "name": task.name,
+                "description": task.description,
+                "status": task.status
+            }
+        for task_id, task in tasks.items()]
+
+        data = {
+            "last_task_id": last_task_id,
+            "tasks": data_task}
 
         with open(self.filename, "w") as file:
             json.dump(data, file, indent=2)
 
-    def load(self) -> list[Task]:
+    def load_from_json(self) -> tuple[int, dict[int, Task]]:
         if not self.filename.exists():
-            return []
+            return 1, {}
 
         with open(self.filename) as file:
             data = json.load(file)
 
-        return [Task(task["name"], task["description"], task["done"])
-                for task in data]
+        last_task_id: int = data.get("last_task_id") # if isinstance("last_task_id", int) else 1
+        tasks: dict[int, Task] = {
+            task["id"]: Task(task["name"], task["description"], task["status"])
+            for task in data.get("tasks")
+        }
+
+        return last_task_id, tasks
